@@ -1,14 +1,20 @@
 {
   "name": "ignite-design-system",
   "version": "1.0.0",
-  "private": "true",
+  "private": true,
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev":"turbo run dev --parallel",
+    "build":"turbo run build"
+  },
   "keywords": [],
   "author": "Bruno Alves",
   "license": "MIT",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "turbo": "^1.6.3"
+  }
 }
