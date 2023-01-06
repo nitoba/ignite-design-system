@@ -3,21 +3,21 @@ import {
   TooltipPortal,
   TooltipProvider,
 } from '@radix-ui/react-tooltip'
-import { ReactNode } from 'react'
+import { ComponentProps, ReactNode } from 'react'
 import { TooltipContainer, TooltipContent, TooltipTrigger } from './styles'
 
 export type TooltipProps = {
   children: ReactNode
   content: ReactNode
-}
+} & ComponentProps<typeof TooltipContent>
 
-export function Tooltip({ children, content }: TooltipProps) {
+export function Tooltip({ children, content, ...props }: TooltipProps) {
   return (
     <TooltipProvider>
       <TooltipContainer>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipPortal>
-          <TooltipContent>
+          <TooltipContent {...props}>
             {content}
             <TooltipArrow />
           </TooltipContent>
