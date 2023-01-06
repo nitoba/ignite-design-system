@@ -1,12 +1,14 @@
 {
-  "name": "ignite-design-system",
   "version": "1.0.0",
   "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"turbo run dev --parallel",
-    "build":"turbo run build"
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release":"turbo run build --filter=@nito-ui/docs && changeset publish"
   },
   "keywords": [],
   "author": "Bruno Alves",
@@ -15,6 +17,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
     "turbo": "^1.6.3"
   }
 }

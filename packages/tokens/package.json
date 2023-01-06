@@ -1,5 +1,5 @@
 {
-  "name": "@ignite-ui/tokens",
+  "name": "@nito-ui/tokens",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "tsup": "^6.5.0",
     "typescript": "^4.9.4",
-    "@ignite-ui/tsconfig": "*",
-    "@ignite-ui/eslint-config": "*"
+    "@nito-ui/tsconfig": "*",
+    "@nito-ui/eslint-config": "*"
   }
 }
