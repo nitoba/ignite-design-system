@@ -16,6 +16,7 @@ module.exports = {
   "features": {
     "storyStoreV7": true
   },
+  "staticDirs": ['../../../.github'],
   viteFinal: (config, { configType }) => {
     if (configType === "PRODUCTION") {
       config.base = "/ignite-design-system/"
