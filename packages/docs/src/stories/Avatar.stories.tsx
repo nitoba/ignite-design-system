@@ -8,6 +8,14 @@ export default {
     src: 'https://github.com/nitoba.png',
     alt: 'Avatar image of nitoba',
   },
+
+  argTypes: {
+    src: {
+      control: {
+        type: 'text',
+      },
+    },
+  },
 } as Meta<AvatarProps>
 
 export const Primary: StoryObj<AvatarProps> = {}

@@ -7,6 +7,14 @@ export default {
   args: {
     children: <Text>Testando o comspanonente Box</Text>,
   },
+
+  argTypes: {
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 } as Meta<BoxProps>
 
 export const Primary: StoryObj<BoxProps> = {}
