@@ -1,10 +1,11 @@
 {
   "name": "@nito-ui/react",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
     "dev": "tsup src/index.tsx --format esm,cjs --dts --watch --external react",
@@ -35,5 +36,8 @@
   },
   "files": [
     "dist/**"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
