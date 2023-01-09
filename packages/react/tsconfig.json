@@ -1,4 +1,5 @@
 {
   "extends": "@nito-ui/tsconfig/react.json",
-  "include": ["src"]
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
 }

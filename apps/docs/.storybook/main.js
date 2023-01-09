@@ -16,7 +16,7 @@ module.exports = {
   "features": {
     "storyStoreV7": true
   },
-  "staticDirs": ['../../../.github'],
+  "staticDirs": ['../assets/'],
   viteFinal: (config, { configType }) => {
     if (configType === "PRODUCTION") {
       config.base = "/nito-design-system/"

@@ -1,5 +1,11 @@
 # @nito-ui/react
 
+## 2.4.1
+
+### Patch Changes
+
+- update config to publish
+
 ## 2.4.0
 
 ### Minor Changes
