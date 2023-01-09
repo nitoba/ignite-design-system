@@ -34,9 +34,9 @@ This project was developed using the following technologies:
 Clone the project and access the folder.
 
 ```bash
-git clone https://github.com/NitoBa/ignite-design-system
+git clone https://github.com/NitoBa/nito-design-system
 
-cd ignite-design-system
+cd nito-design-system
 ```
 
 Run this command to install the dependencies
