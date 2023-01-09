@@ -59,7 +59,7 @@ You can view the layout through the link below:
 
 You can view the storybook component docs through the link below:
 
-- [Storybook components docs](https://nitoba.github.io/ignite-design-system)
+- [Storybook components docs](https://nitoba.github.io/nito-design-system)
 
 # Components In Design System
 
