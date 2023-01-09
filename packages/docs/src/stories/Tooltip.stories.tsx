@@ -2,7 +2,7 @@ import { StoryObj, Meta } from '@storybook/react'
 import { Box, Text, Tooltip, TooltipProps } from '@nito-ui/react'
 
 export default {
-  title: 'Surfaces/Tooltip',
+  title: 'Alerts/Tooltip',
   component: Tooltip,
   decorators: [
     (Story) => {

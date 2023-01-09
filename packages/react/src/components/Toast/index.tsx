@@ -1,107 +1,105 @@
-import * as ToastRdx from '@radix-ui/react-toast'
-import { X } from 'phosphor-react'
 import {
-  ComponentProps,
   createContext,
   ReactNode,
   useCallback,
   useContext,
-  useEffect,
-  useRef,
   useState,
 } from 'react'
+
+import { v4 as uuid } from 'uuid'
+
+import { ToastProvider as RadixToastProvider } from '@radix-ui/react-toast'
+
 import {
   ToastClose,
   ToastContainer,
   ToastContent,
   ToastDescription,
   ToastTitle,
+  ToastViewport,
 } from './styles'
+import { X } from 'phosphor-react'
 
-type ToastComponentProps = {
+type ToastProviderProps = {
+  children: ReactNode
+}
+
+export type ToastMessage = {
+  id: string
+  type?: 'success' | 'error'
   title?: string
   description: string
-  typeOfMessage?: 'success' | 'warning' | 'error'
-} & ComponentProps<typeof ToastContainer>
-
-type ToastContentProps = Pick<ToastComponentProps, 'title' | 'description'>
+}
 
 export type ToastContextData = {
-  isOpen: boolean
-  showToastMessage: (data: ToastContentProps) => void
+  addToast(message: Omit<ToastMessage, 'id'>): void
+  removeToast(id: string): void
 }
 
 const ToastContext = createContext<ToastContextData>({} as ToastContextData)
 
-export function ToastProvider({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState(false)
-  const [content, setContent] = useState<ToastContentProps | null>(null)
-  const timerRef = useRef(0)
+export function ToastProvider({ children }: ToastProviderProps) {
+  const [messages, setMessages] = useState<ToastMessage[]>([])
 
-  const showToastMessage = useCallback(
-    ({ title, description }: ToastContentProps) => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
+  const addToast = useCallback(
+    ({ type, title, description }: Omit<ToastMessage, 'id'>) => {
+      const id = uuid()
+
+      const toast = {
+        id,
+        type,
+        title,
+        description,
       }
 
-      setContent({ title, description })
-
-      const id = setTimeout(() => {
-        setOpen(true)
-      }, 2000)
-
-      return () => {
-        clearTimeout(id)
-        setContent(null)
-      }
+      setMessages((state) => [...state, toast])
     },
     [],
   )
 
-  useEffect(() => {
-    return () => clearTimeout(timerRef.current)
+  const removeToast = useCallback((id: string) => {
+    setMessages((state) => state.filter((message) => message.id !== id))
   }, [])
 
   return (
-    <ToastContext.Provider value={{ isOpen: open, showToastMessage }}>
-      {children}
+    <ToastContext.Provider value={{ addToast, removeToast }}>
+      <RadixToastProvider>
+        <ToastViewport />
+        {messages.map((message) => (
+          <Toast
+            key={message.id}
+            id={message.id}
+            title={message.title}
+            description={message.description}
+            type={message.type}
+          />
+        ))}
 
-      <Toast
-        open={open}
-        onOpenChange={setOpen}
-        title={content?.title}
-        description={content?.description!}
-      />
+        {children}
+      </RadixToastProvider>
     </ToastContext.Provider>
   )
 }
 
-function Toast({
-  title,
-  description,
-  typeOfMessage = 'success',
-}: ToastComponentProps) {
+function Toast({ title, description }: ToastMessage) {
   return (
-    <ToastRdx.Provider>
-      <ToastContainer>
-        <ToastContent>
-          <ToastTitle>{title}</ToastTitle>
-          <ToastDescription>{description}</ToastDescription>
-          <ToastClose>
-            <X />
-          </ToastClose>
-        </ToastContent>
-      </ToastContainer>
-      <ToastRdx.ToastViewport />
-    </ToastRdx.Provider>
+    <ToastContainer>
+      <ToastContent>
+        <ToastTitle>{title}</ToastTitle>
+        <ToastDescription>{description}</ToastDescription>
+      </ToastContent>
+      <ToastClose>
+        <X />
+      </ToastClose>
+    </ToastContainer>
   )
 }
 
-export function useToast() {
+export function useToast(): ToastContextData {
   const context = useContext(ToastContext)
 
-  if (context === undefined) {
-    throw new Error('useToast must be used within a ToastProvider')
+  if (!context) {
+    throw new Error(`useToast must be used within an ToastProvider`)
   }
 
   return context

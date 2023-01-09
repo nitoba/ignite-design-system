@@ -19,17 +19,14 @@ const swipeOut = keyframes({
 })
 
 export const ToastContainer = styled(Toast.Root, {
-  backgroundColor: 'white',
+  boxSizing: 'border-box',
+  backgroundColor: '$gray800',
+  outline: '2px solid $gray600',
   borderRadius: 6,
-  boxShadow:
-    'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
-  padding: 15,
-  display: 'grid',
-  gridTemplateAreas: '"title action" "description action"',
-  gridTemplateColumns: 'auto max-content',
-  columnGap: 15,
-  alignItems: 'center',
-
+  padding: '$3 $5',
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
   '&[data-state="open"]': {
     animation: `${slideIn} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
@@ -47,8 +44,20 @@ export const ToastContainer = styled(Toast.Root, {
     animation: `${swipeOut} 100ms ease-out`,
   },
 })
-export const ToastContent = styled('div', {})
-export const ToastClose = styled(Toast.Close, {})
+export const ToastContent = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$1',
+})
+export const ToastClose = styled(Toast.Close, {
+  all: 'unset',
+  cursor: 'pointer',
+  color: '$gray200',
+  svg: {
+    width: '$5',
+    height: '$5',
+  },
+})
 
 export const ToastViewport = styled(Toast.Viewport, {
   position: 'fixed',
@@ -67,17 +76,17 @@ export const ToastViewport = styled(Toast.Viewport, {
 })
 
 export const ToastTitle = styled(Toast.Title, {
-  gridArea: 'title',
-  marginBottom: 5,
-  fontWeight: 500,
+  fontWeight: 700,
+  lineHeight: '160%',
   color: '$white',
-  fontSize: 15,
+  fontSize: '$xl',
+  fontFamily: '$default',
 })
 
 export const ToastDescription = styled(Toast.Description, {
-  gridArea: 'description',
-  margin: 0,
   color: '$gray200',
-  fontSize: 13,
-  lineHeight: 1.3,
+  fontSize: '$sm',
+  fontWeight: 'regular',
+  lineHeight: '160%',
+  fontFamily: '$default',
 })

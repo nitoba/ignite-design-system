@@ -1,11 +1,16 @@
-import { StoryObj, Meta, ComponentStory } from '@storybook/react'
-import { Box, ToastProvider, ToastContextData, Button } from '@nito-ui/react'
+import { Meta, Story } from '@storybook/react'
+import {
+  Box,
+  ToastProvider,
+  ToastContextData,
+  Button,
+  useToast,
+} from '@nito-ui/react'
+import { FC } from 'react'
 
 export default {
-  title: 'Surfaces/ToastProvider',
+  title: 'Alerts/Toast',
   component: ToastProvider,
-
-  args: {},
 
   argTypes: {
     children: {
@@ -16,12 +21,43 @@ export default {
   },
 } as Meta<ToastContextData>
 
-export const Toast: ComponentStory<typeof ToastContextData> = ({ ...args }) => {
+const Consumer: FC = () => {
+  const toast = useToast()
+
   return (
-    <ToastProvider {...args}>
-      <Box css={{ display: 'flex', gap: '$2' }}>
-        <Button onClick={() => {}}>Open</Button>
-      </Box>
-    </ToastProvider>
+    <Box>
+      <Button
+        onClick={() =>
+          toast.addToast({
+            title: 'Title',
+            description: 'This is a description',
+          })
+        }
+      >
+        Show Toast
+      </Button>
+    </Box>
   )
 }
+
+Consumer.displayName = `
+    const toast = useToast()
+    <Box>
+      <Button
+        onClick={() =>
+          toast.addToast({
+            title: 'Title',
+            description: 'This is a description',
+          })
+        }
+      >
+        Show Toast
+      </Button>
+    </Box>
+`
+
+export const Template: Story<ToastContextData> = () => (
+  <ToastProvider>
+    <Consumer />
+  </ToastProvider>
+)
