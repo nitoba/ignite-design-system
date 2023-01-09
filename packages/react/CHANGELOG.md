@@ -1,5 +1,11 @@
 # @nito-ui/react
 
+## 2.3.0
+
+### Minor Changes
+
+- config package json
+
 ## 2.2.0
 
 ### Minor Changes
