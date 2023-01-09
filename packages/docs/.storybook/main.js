@@ -19,7 +19,7 @@ module.exports = {
   "staticDirs": ['../../../.github'],
   viteFinal: (config, { configType }) => {
     if (configType === "PRODUCTION") {
-      config.base = "/ignite-design-system/"
+      config.base = "/nito-design-system/"
     }
 
     return config
