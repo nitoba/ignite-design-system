@@ -24,15 +24,17 @@ type ToastProviderProps = {
   children: ReactNode
 }
 
-export type ToastMessage = {
+type ToastMessage = {
   id: string
   type?: 'success' | 'error'
   title?: string
   description: string
 }
 
+export type IToastMessage = Omit<ToastMessage, 'id'>
+
 export type ToastContextData = {
-  addToast(message: Omit<ToastMessage, 'id'>): void
+  addToast(message: IToastMessage): void
   removeToast(id: string): void
 }
 
@@ -42,7 +44,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
   const [messages, setMessages] = useState<ToastMessage[]>([])
 
   const addToast = useCallback(
-    ({ type, title, description }: Omit<ToastMessage, 'id'>) => {
+    ({ type, title, description }: IToastMessage) => {
       const id = uuid()
 
       const toast = {
