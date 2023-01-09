@@ -1,5 +1,11 @@
 # @nito-ui/react
 
+## 2.5.0
+
+### Minor Changes
+
+- adjust due app
+
 ## 2.4.1
 
 ### Patch Changes
