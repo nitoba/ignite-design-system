@@ -1,6 +1,5 @@
-import { Meta, Story } from '@storybook/react'
+import { ComponentStory, Meta } from '@storybook/react'
 import { Box, ToastProvider, Button, useToast } from '@nito-ui/react'
-import { FC } from 'react'
 
 export default {
   title: 'Alerts/Toast',
@@ -15,60 +14,44 @@ export default {
   },
 } as Meta
 
-type ConsumerProps = {
-  type: 'error' | 'success'
-}
-
-const Consumer: FC<ConsumerProps> = ({ type }) => {
+export const Success: ComponentStory<typeof Box> = () => {
   const toast = useToast()
-
   return (
-    <Box>
-      <Button
-        onClick={() => {
-          if (type === 'success') {
+    <>
+      <ToastProvider />
+      <Box>
+        <Button
+          onClick={() => {
             toast.showSuccessMessage({
               title: 'Title',
               description: 'This is a description',
             })
-          } else {
-            toast.showErrorMessage({
-              title: 'Error',
-              description: 'This is a description error message',
-            })
-          }
-        }}
-      >
-        Show Toast
-      </Button>
-    </Box>
+          }}
+        >
+          Show Toast
+        </Button>
+      </Box>
+    </>
   )
 }
 
-Consumer.displayName = `
-    const toast = useToast()
-    <Box>
-      <Button
-        onClick={() =>
-          toast.addToast({
-            title: 'Title',
-            description: 'This is a description',
-          })
-        }
-      >
-        Show Toast
-      </Button>
-    </Box>
-`
-
-export const Success: Story = () => (
-  <ToastProvider>
-    <Consumer type="success" />
-  </ToastProvider>
-)
-
-export const Error: Story = () => (
-  <ToastProvider>
-    <Consumer type="error" />
-  </ToastProvider>
-)
+export const Error: ComponentStory<typeof Box> = () => {
+  const toast = useToast()
+  return (
+    <>
+      <ToastProvider />
+      <Box>
+        <Button
+          onClick={() => {
+            toast.showErrorMessage({
+              title: 'Error',
+              description: 'This is a description of the error',
+            })
+          }}
+        >
+          Show Toast
+        </Button>
+      </Box>
+    </>
+  )
+}

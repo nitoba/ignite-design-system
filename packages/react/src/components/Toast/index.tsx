@@ -1,7 +1,7 @@
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { ReactNode, useCallback } from 'react'
+import { useCallback } from 'react'
 import { Container, Content, Description, Title } from './styles'
 import { X } from 'phosphor-react'
 
@@ -42,28 +42,25 @@ function ToastMessage({
   )
 }
 
-export function ToastProvider({ children }: { children: ReactNode }) {
+export function ToastProvider() {
   return (
-    <>
-      {children}
-      <ToastContainer
-        position="bottom-right"
-        hideProgressBar
-        toastStyle={{
-          backgroundColor: 'transparent',
-          padding: 0,
-          margin: 0,
-          boxShadow: 'none',
-        }}
-        bodyStyle={{
-          padding: 0,
-          margin: 0,
-          display: 'block',
-        }}
-        closeButton={false}
-        theme="light"
-      />
-    </>
+    <ToastContainer
+      position="bottom-right"
+      hideProgressBar
+      toastStyle={{
+        backgroundColor: 'transparent',
+        padding: 0,
+        margin: 0,
+        boxShadow: 'none',
+      }}
+      bodyStyle={{
+        padding: 0,
+        margin: 0,
+        display: 'block',
+      }}
+      closeButton={false}
+      theme="light"
+    />
   )
 }
 
