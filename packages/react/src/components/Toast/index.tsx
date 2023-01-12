@@ -1,5 +1,5 @@
 import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import './styles.css'
 
 import { useCallback } from 'react'
 import { Container, Content, Description, Title } from './styles'

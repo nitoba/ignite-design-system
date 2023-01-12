@@ -1,5 +1,11 @@
 # @nito-ui/react
 
+## 4.0.0
+
+### Major Changes
+
+- add styles css
+
 ## 3.2.0
 
 ### Minor Changes
