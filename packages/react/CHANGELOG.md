@@ -1,5 +1,11 @@
 # @nito-ui/react
 
+## 3.2.0
+
+### Minor Changes
+
+- remove old packages
+
 ## 3.1.0
 
 ### Minor Changes
