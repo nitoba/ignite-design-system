@@ -1,108 +1,84 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import { v4 as uuid } from 'uuid'
-
-import { ToastProvider as RadixToastProvider } from '@radix-ui/react-toast'
-
-import {
-  ToastClose,
-  ToastContainer,
-  ToastContent,
-  ToastDescription,
-  ToastTitle,
-  ToastViewport,
-} from './styles'
+import { ReactNode, useCallback } from 'react'
+import { Container, Content, Description, Title } from './styles'
 import { X } from 'phosphor-react'
 
-type ToastProviderProps = {
-  children: ReactNode
-}
-
-type ToastMessage = {
-  id: string
-  type?: 'success' | 'error'
-  title?: string
+type ToastContentProps = {
+  title: string
   description: string
 }
 
-export type IToastMessage = Omit<ToastMessage, 'id'>
+type ToastMessageProps = {
+  type: 'error' | 'success'
+  onClose: (() => void) | undefined
+} & ToastContentProps
 
-export type ToastContextData = {
-  addToast(message: IToastMessage): void
-  removeToast(id: string): void
+type useModalProps = {
+  showSuccessMessage: (options: ToastContentProps) => void
+  showErrorMessage: (options: ToastContentProps) => void
 }
 
-const ToastContext = createContext<ToastContextData>({} as ToastContextData)
-
-export function ToastProvider({ children }: ToastProviderProps) {
-  const [messages, setMessages] = useState<ToastMessage[]>([])
-
-  const addToast = useCallback(
-    ({ type, title, description }: IToastMessage) => {
-      const id = uuid()
-
-      const toast = {
-        id,
-        type,
-        title,
-        description,
-      }
-
-      setMessages((state) => [...state, toast])
-    },
-    [],
+function ToastMessage({
+  title,
+  description,
+  type,
+  onClose,
+}: ToastMessageProps) {
+  return (
+    <Container type={type}>
+      <Content>
+        <Title as="strong">{title}</Title>
+        <Description
+          as="span"
+          css={{ color: type === 'error' ? '$gray100' : '$gray200' }}
+        >
+          {description}
+        </Description>
+      </Content>
+      <X onClick={onClose} />
+    </Container>
   )
+}
 
-  const removeToast = useCallback((id: string) => {
-    setMessages((state) => state.filter((message) => message.id !== id))
+export function ToastProvider({ children }: { children: ReactNode }) {
+  return (
+    <>
+      {children}
+      <ToastContainer
+        position="bottom-right"
+        hideProgressBar
+        toastStyle={{
+          backgroundColor: 'transparent',
+          padding: 0,
+          margin: 0,
+          boxShadow: 'none',
+        }}
+        bodyStyle={{
+          padding: 0,
+          margin: 0,
+          display: 'block',
+        }}
+        closeButton={false}
+        theme="light"
+      />
+    </>
+  )
+}
+
+export function useToast(): useModalProps {
+  const showSuccessMessage = useCallback((props: ToastContentProps) => {
+    toast(({ closeToast }) => (
+      <ToastMessage {...props} onClose={closeToast} type="success" />
+    ))
   }, [])
 
-  return (
-    <ToastContext.Provider value={{ addToast, removeToast }}>
-      <RadixToastProvider>
-        <ToastViewport />
-        {messages.map((message) => (
-          <Toast
-            key={message.id}
-            id={message.id}
-            title={message.title}
-            description={message.description}
-            type={message.type}
-          />
-        ))}
+  const showErrorMessage = useCallback((props: ToastContentProps) => {
+    toast(({ closeToast }) => (
+      <ToastMessage {...props} onClose={closeToast} type="error" />
+    ))
+  }, [])
 
-        {children}
-      </RadixToastProvider>
-    </ToastContext.Provider>
-  )
-}
-
-function Toast({ title, description }: ToastMessage) {
-  return (
-    <ToastContainer>
-      <ToastContent>
-        <ToastTitle>{title}</ToastTitle>
-        <ToastDescription>{description}</ToastDescription>
-      </ToastContent>
-      <ToastClose>
-        <X />
-      </ToastClose>
-    </ToastContainer>
-  )
-}
-
-export function useToast(): ToastContextData {
-  const context = useContext(ToastContext)
-
-  if (!context) {
-    throw new Error(`useToast must be used within an ToastProvider`)
-  }
-
-  return context
+  return { showSuccessMessage, showErrorMessage }
 }

@@ -1,5 +1,11 @@
 # @nito-ui/react
 
+## 3.0.0
+
+### Major Changes
+
+- fix toast component
+
 ## 2.5.0
 
 ### Minor Changes

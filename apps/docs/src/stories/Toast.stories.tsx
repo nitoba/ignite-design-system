@@ -1,11 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import {
-  Box,
-  ToastProvider,
-  ToastContextData,
-  Button,
-  useToast,
-} from '@nito-ui/react'
+import { Box, ToastProvider, Button, useToast } from '@nito-ui/react'
 import { FC } from 'react'
 
 export default {
@@ -19,20 +13,31 @@ export default {
       },
     },
   },
-} as Meta<ToastContextData>
+} as Meta
 
-const Consumer: FC = () => {
+type ConsumerProps = {
+  type: 'error' | 'success'
+}
+
+const Consumer: FC<ConsumerProps> = ({ type }) => {
   const toast = useToast()
 
   return (
     <Box>
       <Button
-        onClick={() =>
-          toast.addToast({
-            title: 'Title',
-            description: 'This is a description',
-          })
-        }
+        onClick={() => {
+          if (type === 'success') {
+            toast.showSuccessMessage({
+              title: 'Title',
+              description: 'This is a description',
+            })
+          } else {
+            toast.showErrorMessage({
+              title: 'Error',
+              description: 'This is a description error message',
+            })
+          }
+        }}
       >
         Show Toast
       </Button>
@@ -56,8 +61,14 @@ Consumer.displayName = `
     </Box>
 `
 
-export const Template: Story<ToastContextData> = () => (
+export const Success: Story = () => (
   <ToastProvider>
-    <Consumer />
+    <Consumer type="success" />
+  </ToastProvider>
+)
+
+export const Error: Story = () => (
+  <ToastProvider>
+    <Consumer type="error" />
   </ToastProvider>
 )
