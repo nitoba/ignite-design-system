@@ -11,7 +11,7 @@
 </p>
 
 <h1 align="center">
-  Design System Ignite
+  Design System Nito UI
 </h1>
 
 <br>
